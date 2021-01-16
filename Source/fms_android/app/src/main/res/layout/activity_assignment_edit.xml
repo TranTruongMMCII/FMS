@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.AssignmentEditActivity">
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="288dp"
+        tools:layout_editor_absoluteY="389dp">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="20pt"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp"
+            android:text="Edit Assignment"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10sp" />
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="0dp"
+            android:text="Class ID"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/tvClassID_EditAssign"
+            android:layout_width="match_parent"
+            android:layout_height="20pt"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="5dp"
+            android:background="@drawable/rounded_corner_background_edit_text"
+            android:ems="10"
+            android:gravity="center|left"
+            android:text="Class ID"
+            android:textAllCaps="false"
+            android:textSize="20sp" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10sp" />
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="0dp"
+            android:text="Class Name"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tvClassName_editAssign"
+            android:layout_width="match_parent"
+            android:layout_height="20pt"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="5dp"
+            android:background="@drawable/rounded_corner_background_edit_text"
+            android:ems="10"
+            android:text="Class Name"
+            android:textSize="20sp"
+            android:gravity="center|left"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10sp" />
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="5dp"
+            android:text="Module ID"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/tvModuleID_EditAssign"
+            android:layout_width="match_parent"
+            android:layout_height="20pt"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="5dp"
+            android:background="@drawable/rounded_corner_background_edit_text"
+            android:ems="10"
+            android:text="Module ID"
+            android:textSize="20sp"
+            android:gravity="center|left"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10sp" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="5dp"
+            android:text="Module Name"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/tvModuleName_EditAssign"
+            android:layout_width="match_parent"
+            android:layout_height="20pt"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="5dp"
+            android:background="@drawable/rounded_corner_background_edit_text"
+            android:ems="10"
+            android:text="Module Name"
+            android:textSize="20sp"
+            android:gravity="center|left"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10sp" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="5dp"
+            android:text="Trainer ID"
+            android:textSize="20sp"/>
+
+        <Spinner
+            android:id="@+id/spnTrainerID_EditAssign"
+            android:layout_width="match_parent"
+            android:layout_height="25pt"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="5dp"
+            android:background="@drawable/rounded_corner_background_edit_text"
+            android:ems="10" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="10" />
+
+            <Button
+                android:id="@+id/btnSaveEditAssign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Save"
+
+                android:layout_marginVertical="15dp"
+                android:background="@drawable/rounded_corner_blue_background"
+                android:ems="5"
+                />
+
+            <Button
+                android:id="@+id/btnBackEditAssign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Back"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="15dp"
+                android:background="@drawable/rounded_corner_red_background"
+                android:ems="5"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
