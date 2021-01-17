@@ -37,7 +37,7 @@ public class Question extends Auditable<String>{
 	
 	private Boolean isDeleted;
 	
-	@OneToMany(mappedBy = "question_answer", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "answerKey.questionID", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Answer> answers;
 	
 	@OneToMany(mappedBy = "question_feedback_question", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -44,7 +44,7 @@ public class Class extends Auditable<String>{
 	@Column(name = "IsDeleted")
 	private Boolean isDeleted;
 	
-	@OneToMany(mappedBy = "class_answer", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "answerKey.classID", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Answer> answers;
 	
 	@OneToMany(mappedBy = "class_enroll", cascade = CascadeType.ALL, orphanRemoval = true)

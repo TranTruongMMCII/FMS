@@ -27,5 +27,4 @@ public interface AssignmentService {
 
     @DELETE("api/v1/assignments/deleteAssignment/{classId}/{moduleId}/{trainerId}")
     Call<Void> delete(@Path("classId") long classId, @Path("moduleId") long moduleId, @Path("trainerId") String trainerId);
-
 }

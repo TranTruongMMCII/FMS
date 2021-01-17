@@ -1,70 +1,66 @@
-//package fms.api.dto;
-//
-//import org.springframework.lang.NonNull;
-//
-//import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-//import com.fasterxml.jackson.annotation.JsonInclude;
-//
-//@JsonInclude(JsonInclude.Include.NON_NULL)
-//@JsonIgnoreProperties(ignoreUnknown = true)
-//public class AnswerDto {
-//	@NonNull
-//	public int classId;
-//	
-//	@NonNull
-//	public int moduleId;
-//	
-//	@NonNull
-//	public String traineeId;
-//	
-//	@NonNull
-//	public int questionID;
-//	
-//	@NonNull
-//	public String value;
-//	
-//	public int getQuestionID() {
-//		return questionID;
-//	}
-//
-//	public void setQuestionID(int questionID) {
-//		this.questionID = questionID;
-//	}
-//
-//
-//	public int getClassId() {
-//		return classId;
-//	}
-//
-//	public void setClassId(int classId) {
-//		this.classId = classId;
-//	}
-//
-//	public int getModuleId() {
-//		return moduleId;
-//	}
-//
-//	public void setModuleId(int moduleId) {
-//		this.moduleId = moduleId;
-//	}
-//
-//	public String getTraineeId() {
-//		return traineeId;
-//	}
-//
-//	public void setTraineeId(String traineeId) {
-//		this.traineeId = traineeId;
-//	}
-//
-//	public String getValue() {
-//		return value;
-//	}
-//
-//	public void setValue(String value) {
-//		this.value = value;
-//	}
-//
-//	
-//	
-//	
-//}
+package fms.api.dto;
+
+import org.springframework.lang.NonNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class AnswerDTO {
+
+	@NonNull
+	private int classID;
+	
+	@NonNull
+	private long moduleID;
+	
+	@NonNull
+	private String traineeID;
+	
+	@NonNull
+	private int questionID;
+	
+	@NonNull
+	private int value;
+
+	public int getClassID() {
+		return classID;
+	}
+
+	public void setClassID(long l) {
+		this.classID = (int) l;
+	}
+
+	public long getModuleID() {
+		return moduleID;
+	}
+
+	public void setModuleID(long moduleID) {
+		this.moduleID = moduleID;
+	}
+
+	public String getTraineeID() {
+		return traineeID;
+	}
+
+	public void setTraineeID(String traineeID) {
+		this.traineeID = traineeID;
+	}
+
+	public int getQuestionID() {
+		return questionID;
+	}
+
+	public void setQuestionID(int questionID) {
+		this.questionID = questionID;
+	}
+
+	public int getValue() {
+		return value;
+	}
+
+	public void setValue(int value) {
+		this.value = value;
+	}
+}

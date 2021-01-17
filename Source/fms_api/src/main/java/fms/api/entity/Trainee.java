@@ -48,7 +48,7 @@ public class Trainee extends Auditable<String>{
 	@Column(name = "ResetPasswordCode")
 	private String resetPasswordCode;
 	
-	@OneToMany(mappedBy = "trainee_answer", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "answerKey.traineeID", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Answer> answer;
 	
 	@OneToMany(mappedBy = "trainee_enroll", cascade = CascadeType.ALL, orphanRemoval = true)

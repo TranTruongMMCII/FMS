@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import fms.api.entity.Feedback;
-import fms.api.entity.FeedbackGetResult;
+//import fms.api.entity.FeedbackGetResult;
 import fms.api.exception.ResourceNotFoundException;
 import fms.api.repository.FeedbackRepository;
 
@@ -68,37 +68,3 @@ public class FeedbackController {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

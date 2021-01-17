@@ -1,48 +1,72 @@
 package com.example.fms_android.model;
 
 public class Assignment {
-    private Class classId;
-    private Module moduleId;
-    private Trainer trainerId;
+    private long classId;
+//    private Module moduleId;
+    private long moduleId;
+    private String trainerId;
     private String registrationCode;
 
-    public Assignment(Class classId, Module moduleId, Trainer trainerId, String registrationCode) {
+//    public Assignment(long classId, Module moduleId, String trainerId, String registrationCode) {
+//        this.classId = classId;
+//        this.moduleId = moduleId;
+//        this.trainerId = trainerId;
+//        this.registrationCode = registrationCode;
+//    }
+//
+//    public Assignment(long classId, Module moduleId, String trainerId) {
+//        this.classId = classId;
+//        this.moduleId = moduleId;
+//        this.trainerId = trainerId;
+//    }
+
+
+    public Assignment(long classId, long moduleId, String trainerId) {
+        this.classId = classId;
+        this.moduleId = moduleId;
+        this.trainerId = trainerId;
+    }
+
+    public Assignment(long classId, long moduleId, String trainerId, String registrationCode) {
         this.classId = classId;
         this.moduleId = moduleId;
         this.trainerId = trainerId;
         this.registrationCode = registrationCode;
     }
 
-    public Assignment(Class classId, Module moduleId, Trainer trainerId) {
-        this.classId = classId;
-        this.moduleId = moduleId;
-        this.trainerId = trainerId;
-    }
-
     public Assignment() {
     }
 
-    public Class getClassId() {
-        return classId;
-    }
-
-    public void setClassId(Class classId) {
-        this.classId = classId;
-    }
-
-    public Module getModuleId() {
-        return this.moduleId;
-    }
-
-    public void setModuleId(Module moduleId) {
+    public void setModuleId(long moduleId) {
         this.moduleId = moduleId;
     }
 
-    public Trainer getTrainerId() {
+    public long getClassId() {
+        return classId;
+    }
+
+    public void setClassId(long classId) {
+        this.classId = classId;
+    }
+
+//    public Module getModuleId() {
+//        return moduleId;
+//    }
+//
+//    public void setModuleId(Module moduleId) {
+//        this.moduleId = moduleId;
+//    }
+
+
+    public long getModuleId() {
+        return moduleId;
+    }
+
+    public String getTrainerId() {
         return trainerId;
     }
 
-    public void setTrainerId(Trainer trainerId) {
+    public void setTrainerId(String trainerId) {
         this.trainerId = trainerId;
     }
 

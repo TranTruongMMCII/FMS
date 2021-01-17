@@ -57,7 +57,7 @@ public class Module extends Auditable<String>{
 	@JoinColumn(name = "FeedbackID")
 	private Feedback feedback_module;
 	
-	@OneToMany(mappedBy = "module_answer", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "answerKey.moduleID", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Answer> answers;
 	
 	@JsonIgnore
@@ -157,25 +157,3 @@ public class Module extends Auditable<String>{
 	
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

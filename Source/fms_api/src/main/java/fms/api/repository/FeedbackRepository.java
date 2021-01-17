@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import fms.api.entity.Feedback;
-import fms.api.entity.FeedbackGetResult;
+//import fms.api.entity.FeedbackGetResult;
 
 @Repository
 public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
