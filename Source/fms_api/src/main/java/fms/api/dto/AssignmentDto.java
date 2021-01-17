@@ -1,48 +1,90 @@
 package fms.api.dto;
-
 import org.springframework.lang.NonNull;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.sun.istack.NotNull;
 
+import fms.api.entity.Class;
+import fms.api.entity.Module;
+import fms.api.entity.Trainer;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AssignmentDto {
-
-	@NonNull
-	public long classID;
+//	@NonNull
+//	public long classId;
+//	
+//	@NonNull
+//	public long moduleId;
+//	
+//	@NonNull
+//	public String trainerId;
+//	
+//	public String registrationCode;
+//
+//	public long getClassId() {
+//		return classId;
+//	}
+//
+//	public void setClassId(long classId) {
+//		this.classId = classId;
+//	}
+//
+//	public long getModuleId() {
+//		return moduleId;
+//	}
+//
+//	public void setModuleId(long moduleId) {
+//		this.moduleId = moduleId;
+//	}
+//
+//	public String getTrainerId() {
+//		return trainerId;
+//	}
+//
+//	public void setTrainerId(String trainerId) {
+//		this.trainerId = trainerId;
+//	}
+//
+//	public String getRegistrationCode() {
+//		return registrationCode;
+//	}
+//
+//	public void setRegistrationCode(String registrationCode) {
+//		this.registrationCode = registrationCode;
+//	}
 	
-	@NotNull
-	public long moduleID;
+	@NonNull
+	public Class classId;
 	
 	@NonNull
-	public String trainerID;
+	public Module moduleId;
+	
+	@NonNull
+	public Trainer trainerId;
 	
 	public String registrationCode;
 
-	public long getClassID() {
-		return classID;
+	public Class getClassId() {
+		return classId;
 	}
 
-	public void setClassID(long classID) {
-		this.classID = classID;
+	public void setClassId(Class classId) {
+		this.classId = classId;
 	}
 
-	public long getModuleID() {
-		return moduleID;
+	public Module getModuleId() {
+		return moduleId;
 	}
 
-	public void setModuleID(long moduleID) {
-		this.moduleID = moduleID;
+	public void setModuleId(Module moduleId) {
+		this.moduleId = moduleId;
 	}
 
-	public String getTrainerID() {
-		return trainerID;
+	public Trainer getTrainerId() {
+		return trainerId;
 	}
 
-	public void setTrainerID(String trainerID) {
-		this.trainerID = trainerID;
+	public void setTrainerId(Trainer trainerId) {
+		this.trainerId = trainerId;
 	}
 
 	public String getRegistrationCode() {
@@ -54,5 +96,6 @@ public class AssignmentDto {
 	}
 	
 	
-
+	
+	
 }

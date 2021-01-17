@@ -20,7 +20,6 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.My
 
     private Context context;
     private ArrayList<Assignment> assignments;
-    private ArrayList<Module> modules;
 
     public AssignmentAdapter(Context context, ArrayList<Assignment> assignments) {
         this.context = context;
@@ -33,16 +32,14 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.My
         View view = LayoutInflater.from(context).inflate(R.layout.assignment_item, parent, false);
         return new MyViewHolder(view);
     }
-//Long.toString(assignment.getModuleId().getModuleID())
+
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Assignment assignment = assignments.get(position);
-
-//        Module module = ;
         holder.tvAssignmentID.setText(Integer.toString(position+1));
-        holder.tvModuleName.setText("");
-        holder.tvClassName.setText(Long.toString(assignment.getClassId()));
-        holder.tvTrainerName.setText(assignment.getTrainerId());
+        holder.tvModuleName.setText(assignment.getModuleId().getModuleName());
+        holder.tvClassName.setText(assignment.getClassId().getClassName());
+        holder.tvTrainerName.setText(assignment.getTrainerId().getUserName());
         holder.tvCode.setText("sdkjsjcb");
     }
 

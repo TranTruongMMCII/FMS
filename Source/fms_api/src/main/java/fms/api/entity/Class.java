@@ -15,6 +15,8 @@ import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import fms.api.audit.Auditable;
 
 @Entity
@@ -25,7 +27,7 @@ public class Class extends Auditable<String>{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ClassID")
-	private int classID;
+	private long classID;
 	
 	@Column(name = "ClassName")
 	private String className;
@@ -48,12 +50,9 @@ public class Class extends Auditable<String>{
 	@OneToMany(mappedBy = "class_enroll", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Enrollment> enrollments;
 	
-	@OneToMany(mappedBy = "class_assignment", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnore
+	@OneToMany(mappedBy = "assignmentKey.classId", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Assignment> assignments;
-	
-	
-	
-	
 
 
 	public List<Assignment> getAssignments() {
@@ -72,11 +71,11 @@ public class Class extends Auditable<String>{
 		this.enrollments = enrollments;
 	}
 
-	public int getClassID() {
+	public long getClassID() {
 		return classID;
 	}
 
-	public void setClassID(int classID) {
+	public void setClassID(long classID) {
 		this.classID = classID;
 	}
 

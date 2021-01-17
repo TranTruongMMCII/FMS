@@ -11,7 +11,7 @@ public class    Module {
     private boolean IsDeleted;
     private Date FeedbackStartTime;
     private Date FeedbackEndTime;
-    private Long feedback_module;
+    private Feedback feedback_module;
 
     public long getModuleID() {
         return ModuleID;
@@ -77,11 +77,11 @@ public class    Module {
         FeedbackEndTime = feedbackEndTime;
     }
 
-    public Long getFeedback_module() {
+    public Feedback getFeedback_module() {
         return feedback_module;
     }
 
-    public void setFeedback_module(Long feedback_module) {
+    public void setFeedback_module(Feedback feedback_module) {
         this.feedback_module = feedback_module;
     }
 
@@ -90,7 +90,7 @@ public class    Module {
 
     public Module(long moduleID, String admin_module, String moduleName,
                   Date startTime, Date endTime, boolean isDeleted,
-                  Date feedbackStartTime, Date feedbackEndTime, Long feedback_module) {
+                  Date feedbackStartTime, Date feedbackEndTime, Feedback feedback_module) {
         ModuleID = moduleID;
         this.admin_module = admin_module;
         ModuleName = moduleName;

@@ -6,13 +6,17 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import fms.api.audit.Auditable;
 
@@ -33,16 +37,18 @@ public class Admin extends Auditable<String>{
 	private String Email;
 	
 	@Column(name = "Password", nullable = false)
-	private boolean Password;
+	private String Password;
 	
 	@OneToMany(mappedBy = "admin_module", cascade =  CascadeType.ALL, orphanRemoval = true)
-	private List<Module>modules;
 	
-	@OneToMany(mappedBy = "admin_feedback", cascade =  CascadeType.ALL, orphanRemoval =  true)
+	private List<Module> modules;
+	
+	@OneToMany(mappedBy = "AdminID", cascade =  CascadeType.ALL, orphanRemoval =  true)
+	
 	private List<Feedback> feedbacks;
 	
 	
-
+	@JsonBackReference
 	public List<Module> getModules() {
 		return modules;
 	}
@@ -50,7 +56,8 @@ public class Admin extends Auditable<String>{
 	public void setModules(List<Module> modules) {
 		this.modules = modules;
 	}
-
+	
+	@JsonBackReference
 	public List<Feedback> getFeedbacks() {
 		return feedbacks;
 	}
@@ -83,11 +90,11 @@ public class Admin extends Auditable<String>{
 		Email = email;
 	}
 
-	public boolean isPassword() {
+	public String isPassword() {
 		return Password;
 	}
 
-	public void setPassword(boolean password) {
+	public void setPassword(String password) {
 		Password = password;
 	}
 }

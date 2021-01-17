@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +17,14 @@ import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import fms.api.audit.Auditable;
 
 @Entity
@@ -25,24 +34,25 @@ import fms.api.audit.Auditable;
 public class Feedback extends Auditable<String>{
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "FeedbackID", nullable = false)
 	private long FeedbackID;
 	
 	@Column(name = "Title", nullable = false)
 	private String Title;
 	
-	@ManyToOne
-	@JoinColumn(name = "UserName")
-	private Admin admin_feedback;
-	
-	
 	@Column(name = "IsDeleted", nullable = false)
 	private boolean IsDeleted;
+	
+	@ManyToOne
+	@JoinColumn(name = "UserName")
+	
+	private Admin AdminID;
 
 	@ManyToOne
 	@JoinColumn(name = "TypeID")
-	private TypeFeedback typefeedback_feedback;
+	
+	private TypeFeedback feedback_typeID;
 
 	@OneToMany(mappedBy = "feedback_feedback_question", cascade = CascadeType.ALL, orphanRemoval =  true)
 	private List<Feedback_Question> feedback_Questions;
@@ -50,8 +60,7 @@ public class Feedback extends Auditable<String>{
 	@OneToMany(mappedBy = "feedback_module", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Module> modules;
 	
-	
-	
+	@JsonBackReference
 	public List<Module> getModules() {
 		return modules;
 	}
@@ -59,16 +68,8 @@ public class Feedback extends Auditable<String>{
 	public void setModules(List<Module> modules) {
 		this.modules = modules;
 	}
-
-	public TypeFeedback getTypefeedback_feedback() {
-		return typefeedback_feedback;
-	}
-
-	public void setTypefeedback_feedback(TypeFeedback typefeedback_feedback) {
-		this.typefeedback_feedback = typefeedback_feedback;
-	}
-
-
+	
+	@JsonBackReference
 	public List<Feedback_Question> getFeedback_Questions() {
 		return feedback_Questions;
 	}
@@ -76,7 +77,16 @@ public class Feedback extends Auditable<String>{
 	public void setFeedback_Questions(List<Feedback_Question> feedback_Questions) {
 		this.feedback_Questions = feedback_Questions;
 	}
+	
+	@JsonManagedReference
+	public TypeFeedback getFeedback_typeID() {
+		return feedback_typeID;
+	}
 
+	public void setFeedback_typeID(TypeFeedback feedback_typeID) {
+		this.feedback_typeID = feedback_typeID;
+	}
+	
 	public long getFeedbackID() {
 		return FeedbackID;
 	}
@@ -92,13 +102,14 @@ public class Feedback extends Auditable<String>{
 	public void setTitle(String title) {
 		Title = title;
 	}
-
-	public Admin getAdmin_feedback() {
-		return admin_feedback;
+	
+	@JsonManagedReference
+	public Admin getAdminID() {
+		return AdminID;
 	}
 
-	public void setAdmin_feedback(Admin admin_feedback) {
-		this.admin_feedback = admin_feedback;
+	public void setAdminID(Admin adminID) {
+		AdminID = adminID;
 	}
 
 	public boolean isIsDeleted() {

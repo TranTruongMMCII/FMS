@@ -5,8 +5,6 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-
 import fms.api.entity.Assignment;
 import fms.api.entity.AssignmentKey;
 import fms.api.entity.Class;
@@ -15,7 +13,7 @@ import fms.api.entity.Trainer;
 
 @Repository
 public interface AssignmentRepository extends JpaRepository<Assignment, AssignmentKey>{
-Optional<Assignment> findAssignmentById(AssignmentKey id);
+	Optional<Assignment> findById(AssignmentKey id);
 	
 	List<Assignment> findByAssignmentKeyTrainerId(Trainer trainerId);
 

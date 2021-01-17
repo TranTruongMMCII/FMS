@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import fms.api.repository.ClassRepository;
 import fms.api.entity.Class;
 import fms.api.exception.ResourceNotFoundException;
-import fms.api.repository.ClassRepository;
 
 @RestController
-@RequestMapping("api/class")
+@RequestMapping("/api/class")
 public class ClassController {
-	
+
 	@Autowired
 	private ClassRepository classRepository;
 	

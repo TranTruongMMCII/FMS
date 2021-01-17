@@ -12,6 +12,8 @@ import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import fms.api.audit.Auditable;
 
 @Entity
@@ -53,7 +55,9 @@ public class Trainer extends Auditable<String>{
 	@Column(name = "IsReceiveNotification")
 	private Boolean isReceiveNotification;
 	
-	@OneToMany(mappedBy = "trainer_assignment", cascade =  CascadeType.ALL, orphanRemoval = true)
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "assignmentKey.trainerId", cascade =  CascadeType.ALL, orphanRemoval = true)
 	private List<Assignment> assignments;
 	
 	

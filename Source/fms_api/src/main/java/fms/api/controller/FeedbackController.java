@@ -1,5 +1,6 @@
 package fms.api.controller;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import fms.api.entity.Feedback;
+import fms.api.entity.FeedbackGetResult;
 import fms.api.exception.ResourceNotFoundException;
 import fms.api.repository.FeedbackRepository;
 
@@ -29,7 +31,7 @@ public class FeedbackController {
 	
 	@GetMapping("/Feedback")
 	public List<Feedback> getAllFeedbacks() {
-		return repository.findAll();
+		return repository.getFeedbackList();
 	}
 	
 	@GetMapping("/Feedback/{id}")
@@ -50,7 +52,7 @@ public class FeedbackController {
 		throws ResourceNotFoundException {
 		Feedback feedback = repository.findById(feedbackId)
 		.orElseThrow(()->new ResourceNotFoundException("Feedback not found on ::"+ feedbackId));
-		feedback.setAdmin_feedback(feedbackDetail.getAdmin_feedback());
+		feedback.setAdminID(feedbackDetail.getAdminID());
 		
 		final Feedback feedback2 = repository.save(feedback);
 		return ResponseEntity.ok(feedback2);
@@ -64,7 +66,6 @@ public class FeedbackController {
 		response.put("delete", Boolean.TRUE);
 		return response;
 	}
-	
 
 }
 

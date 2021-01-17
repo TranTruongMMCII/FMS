@@ -23,7 +23,7 @@ import fms.api.repository.TrainerRepository;
 @RestController
 @RequestMapping("/api/trainer")
 public class TrainerController {
-	
+
 	@Autowired
 	private TrainerRepository trainerRepository;
 	
@@ -74,5 +74,4 @@ public class TrainerController {
 		respone.put("deleted", Boolean.TRUE);
 		return respone;
 	}
-
 }

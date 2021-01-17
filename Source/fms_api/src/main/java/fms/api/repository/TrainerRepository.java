@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import fms.api.entity.Trainer;
 
 @Repository
-public interface TrainerRepository extends JpaRepository<Trainer, String> {
-	Trainer findTrainerByTrainerName (String trainerName);
+public interface TrainerRepository extends JpaRepository<Trainer, String>{
+
+	
 }

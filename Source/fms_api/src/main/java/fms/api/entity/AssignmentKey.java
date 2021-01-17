@@ -7,6 +7,11 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import fms.api.entity.AssignmentKey;
+import fms.api.entity.Class;
+import fms.api.entity.Module;
+import fms.api.entity.Trainer;
+
 @Embeddable
 public class AssignmentKey implements Serializable{
 	/**
@@ -14,49 +19,54 @@ public class AssignmentKey implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ModuleID", referencedColumnName = "ModuleID", insertable = false)
-	private Module moduleId_assign;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ClassID" , referencedColumnName = "ClassID", insertable = false)
-	private Class classId_assign;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "classId", referencedColumnName = "classID", insertable = false)
+	private Class classId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "moduleId", referencedColumnName = "moduleId", insertable = false)
+	private Module moduleId;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "UserName", referencedColumnName = "UserName", insertable = false)
-	private Trainer trainer_assign;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "trainerId", referencedColumnName = "UserName", insertable = false)
+	private Trainer trainerId;
 
-	public Module getModuleId_assign() {
-		return moduleId_assign;
+	public Class getClassId() {
+		return classId;
 	}
 
-	public void setModuleId_assign(Module moduleId_assign) {
-		this.moduleId_assign = moduleId_assign;
+	public void setClassId(Class classId) {
+		this.classId = classId;
 	}
 
-	public Class getClassId_assign() {
-		return classId_assign;
+	public Module getModuleId() {
+		return moduleId;
 	}
 
-	public void setClassId_assign(Class classId_assign) {
-		this.classId_assign = classId_assign;
+	public void setModuleId(Module moduleId) {
+		this.moduleId = moduleId;
 	}
 
-	public Trainer getTrainer_assign() {
-		return trainer_assign;
+	public Trainer getTrainerId() {
+		return trainerId;
 	}
 
-	public void setTrainer_assign(Trainer trainer_assign) {
-		this.trainer_assign = trainer_assign;
+	public void setTrainerId(Trainer trainerId) {
+		this.trainerId = trainerId;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((classId_assign == null) ? 0 : classId_assign.hashCode());
-		result = prime * result + ((moduleId_assign == null) ? 0 : moduleId_assign.hashCode());
-		result = prime * result + ((trainer_assign == null) ? 0 : trainer_assign.hashCode());
+		result = prime * result + ((classId == null) ? 0 : classId.hashCode());
+		result = prime * result + ((moduleId == null) ? 0 : moduleId.hashCode());
+		result = prime * result + ((trainerId == null) ? 0 : trainerId.hashCode());
 		return result;
 	}
 
@@ -69,38 +79,38 @@ public class AssignmentKey implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		AssignmentKey other = (AssignmentKey) obj;
-		if (classId_assign == null) {
-			if (other.classId_assign != null)
+		if (classId == null) {
+			if (other.classId != null)
 				return false;
-		} else if (!classId_assign.equals(other.classId_assign))
+		} else if (!classId.equals(other.classId))
 			return false;
-		if (moduleId_assign == null) {
-			if (other.moduleId_assign != null)
+		if (moduleId == null) {
+			if (other.moduleId != null)
 				return false;
-		} else if (!moduleId_assign.equals(other.moduleId_assign))
+		} else if (!moduleId.equals(other.moduleId))
 			return false;
-		if (trainer_assign == null) {
-			if (other.trainer_assign != null)
+		if (trainerId == null) {
+			if (other.trainerId != null)
 				return false;
-		} else if (!trainer_assign.equals(other.trainer_assign))
+		} else if (!trainerId.equals(other.trainerId))
 			return false;
 		return true;
 	}
-	
-	public AssignmentKey(){
+
+	public AssignmentKey(Class classId, Module moduleId, Trainer trainerId) {
+		super();
+		this.classId = classId;
+		this.moduleId = moduleId;
+		this.trainerId = trainerId;
+	}
+
+	public AssignmentKey() {
 		super();
 	}
 
-
-	public AssignmentKey(Class classId_assign, Module moduleId_assign, Trainer trainer_assign) {
-		super();
-		this.moduleId_assign = moduleId_assign;
-		this.classId_assign = classId_assign;
-		this.trainer_assign = trainer_assign;
-	}
-	
 	public AssignmentKey(Trainer trainerId2) {
 		// TODO Auto-generated constructor stub
 	}
+	
 	
 }

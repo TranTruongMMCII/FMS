@@ -20,8 +20,6 @@ import fms.api.entity.*;
 import fms.api.exception.ResourceNotFoundException;
 import fms.api.repository.*;
 
-
-
 @RestController
 @RequestMapping("/api/v1")
 public class UserController {
@@ -36,7 +34,7 @@ public class UserController {
 	
 	@GetMapping("/users/{id}")
 	public ResponseEntity<User> getUserById(@PathVariable(value = "id") Long userId)
-		throws ResourceNotFoundException{
+		throws ResourceNotFoundException {
 		User user = repository.findById(userId)
 				.orElseThrow(()->new ResourceNotFoundException("User not found on :: " + userId));
 		return ResponseEntity.ok().body(user);

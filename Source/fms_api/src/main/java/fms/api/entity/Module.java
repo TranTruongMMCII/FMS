@@ -17,6 +17,8 @@ import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import fms.api.audit.Auditable;
 
 @Entity
@@ -58,11 +60,9 @@ public class Module extends Auditable<String>{
 	@OneToMany(mappedBy = "module_answer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Answer> answers;
 	
-	@OneToMany(mappedBy = "module_assignmet", cascade =  CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnore
+	@OneToMany(mappedBy = "assignmentKey.moduleId", cascade =  CascadeType.ALL, orphanRemoval = true)
 	private List<Assignment> assignments;
-	
-	
-	
 	
 	public List<Assignment> getAssignments() {
 		return assignments;

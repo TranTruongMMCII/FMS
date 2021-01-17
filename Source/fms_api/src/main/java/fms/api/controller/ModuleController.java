@@ -16,20 +16,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import fms.api.repository.ModuleRepository;
 import fms.api.entity.Module;
 import fms.api.exception.ResourceNotFoundException;
-import fms.api.repository.ModuleRepository;
-
 
 @RestController
 @RequestMapping("/api/module")
 public class ModuleController {
+	
 	@Autowired
 	private ModuleRepository moduleRepository;
 
 	@GetMapping("/getAllModule")
 	public List<Module> getAllModule(){
-		return moduleRepository.getAllModule();	
+	 return moduleRepository.findAll();
 	}
 	
 	@GetMapping("getModuleById/{moduleId}")
@@ -55,7 +55,7 @@ public class ModuleController {
 	public ResponseEntity<Module> updateUser(@PathVariable(value = "moduleId") long moduleId, @Validated @RequestBody Module moduleDetails) throws ResourceNotFoundException{
 		Module module = moduleRepository
 				.findById(moduleId)
-				.orElseThrow(() -> new ResourceNotFoundException("User not found ::" + moduleId));
+				.orElseThrow(() -> new ResourceNotFoundException("Module not found ::" + moduleId));
 		module.setAdmin_module(moduleDetails.getAdmin_module());
 		module.setModuleName(moduleDetails.getModuleName());
 		module.setStartTime(moduleDetails.getStartTime());
@@ -72,7 +72,7 @@ public class ModuleController {
 	public Map<String, Boolean> deleteCourse(@PathVariable(value = "moduleId") long moduleId) throws ResourceNotFoundException{
 		Module course = moduleRepository
 				.findById(moduleId)
-				.orElseThrow(() -> new ResourceNotFoundException("User not found ::" + moduleId));
+				.orElseThrow(() -> new ResourceNotFoundException("Module not found ::" + moduleId));
 		moduleRepository.delete(course);
 		Map<String,Boolean> respone = new HashMap<>();
 		respone.put("deleted", Boolean.TRUE);
