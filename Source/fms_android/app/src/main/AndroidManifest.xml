@@ -15,6 +15,7 @@
         <activity android:name=".activity.AssignmentEditActivity"></activity>
         <activity android:name=".activity.AssignmentActivity" />
         <activity android:name=".activity.UserActivity" />
+        <activity android:name=".activity.FeedbackOfTraineeActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
