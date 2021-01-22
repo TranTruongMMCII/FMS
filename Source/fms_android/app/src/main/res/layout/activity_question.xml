@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ConstraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.QuestionActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="86dp"
+        tools:layout_editor_absoluteY="0dp">
+        >
+
+        <TextView
+            android:id="@+id/txtAddQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="115dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="30dp"
+            android:text="Add Question"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/txtTopicName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/black"
+           />
+
+        <TextView
+            android:id="@+id/txtTopicName"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Topic Name:"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            />
+
+        <Spinner
+            android:id="@+id/spnQuestion_ShowTopicName"
+            android:layout_width="match_parent"
+            android:layout_height="25pt"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="15dp"
+            android:background="@drawable/rounded_corner_topic_spinner"
+            android:ems="10" />
+
+        <TextView
+            android:id="@+id/txtQuesContent"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Question Content:"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            />
+
+        <EditText
+            android:id="@+id/txtContent"
+            android:layout_width="367dp"
+            android:layout_height="276dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="15dp"
+            android:textSize="18dp"
+            android:background="@drawable/rounded_corner_background_edit_text"
+            android:ems="10" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="10" />
+
+            <Button
+                android:id="@+id/btnSaveQ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner_blue_background"
+                android:ems="5"
+                android:text="Save"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                />
+
+            <Button
+                android:id="@+id/btnBackQ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner_red_background"
+                android:ems="5"
+                android:text="Back"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
