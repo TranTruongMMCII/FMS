@@ -27,7 +27,7 @@ import fms.api.audit.Auditable;
 @EntityListeners(AuditingEntityListener.class)
 public class TypeFeedback extends Auditable<String>{
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "TypeID", nullable = false)
 	private long TypeID;
 	

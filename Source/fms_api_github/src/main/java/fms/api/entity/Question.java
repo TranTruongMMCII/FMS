@@ -32,7 +32,7 @@ public class Question extends Auditable<String>{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "QuestionID")
-	private int questionID;
+	private Long questionID;
 	
 	@ManyToOne
 	@JoinColumn(name = "TopicID")
@@ -46,7 +46,7 @@ public class Question extends Auditable<String>{
 	@OneToMany(mappedBy = "answerKey.questionID", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Answer> answers;
 	
-	@OneToMany(mappedBy = "question_feedback_question", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "Feedback_QuestionKey.question_feedback_question", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Feedback_Question> feedback_Questions;
 
 	@JsonIgnore
@@ -66,11 +66,11 @@ public class Question extends Auditable<String>{
 		this.answers = answers;
 	}
 
-	public int getQuestionID() {
+	public Long getQuestionID() {
 		return questionID;
 	}
 
-	public void setQuestionID(int questionID) {
+	public void setQuestionID(Long questionID) {
 		this.questionID = questionID;
 	}
 

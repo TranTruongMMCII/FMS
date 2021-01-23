@@ -17,6 +17,9 @@ import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import fms.api.audit.Auditable;
 
 @Entity
@@ -46,7 +49,8 @@ public class Feedback extends Auditable<String>{
 	
 	private TypeFeedback feedback_typeID;
 	
-	@OneToMany(mappedBy = "feedback_feedback_question", cascade = CascadeType.ALL, orphanRemoval =  true)
+
+	@OneToMany(mappedBy = "Feedback_QuestionKey.feedback_feedback_question", cascade = CascadeType.ALL, orphanRemoval =  true)
 	private List<Feedback_Question> feedback_Questions;
 	
 	
