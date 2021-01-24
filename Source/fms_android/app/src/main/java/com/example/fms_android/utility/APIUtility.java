@@ -1,6 +1,7 @@
 package com.example.fms_android.utility;
 
 import com.example.fms_android.api.APIClient;
+import com.example.fms_android.service.AnswerService;
 import com.example.fms_android.service.AssignmentService;
 import com.example.fms_android.service.UserService;
 
@@ -13,5 +14,9 @@ public class APIUtility {
     }
     public static AssignmentService getAssignmentService(){
         return APIClient.getClient(baseURL).create(AssignmentService.class);
+    }
+
+    public static AnswerService getAnswerService(){
+        return APIClient.getClient(baseURL).create(AnswerService.class);
     }
 }
