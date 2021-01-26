@@ -9,6 +9,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.feedback_management.api.APIUtility;
+import com.example.feedback_management.model.Question;
 import com.example.feedback_management.service.FeedbackService;
 import com.example.feedback_management.model.Feedback;
 
@@ -106,14 +107,7 @@ public class FeedbackViewModel extends AndroidViewModel {
             return null;
         }
     }
-
-
-
-
-
-
-
-
+    
 
 
 

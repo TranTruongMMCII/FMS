@@ -1,5 +1,6 @@
 package com.example.feedback_management.Feedback;
 
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
@@ -19,6 +20,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.feedback_management.AppExecutors;
+import com.example.feedback_management.Dialog.DeleteDialog;
+import com.example.feedback_management.Dialog.SuccessDialog;
 import com.example.feedback_management.FeedbackCreate.FeedbackCreateFragment;
 import com.example.feedback_management.FeedbackReview.FeedbackReviewFragment;
 import com.example.feedback_management.R;
@@ -60,11 +63,17 @@ public class FeedbackFragment extends Fragment {
 
         feedbackAdapter.setOnDeleteClickListener(new FeedbackAdapter.OnDeleteClickListener() {
             @Override
-            public void onDeleteClick(Feedback feedback) {
+            public void onDeleteClick(Feedback feedback, int pos) {
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("fragment", 0);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("fragment_component", "delete_fragment");
+                editor.apply();
 
-                feedbackViewModel.deleteFeedback(feedback.getFeedbackID());
+                DeleteDialog deleteDialog = DeleteDialog.getInstance(((ViewGroup)getView().getParent()).getId(), feedback, pos);
+                deleteDialog.show(getChildFragmentManager(), null);
             }
         });
+
 
         feedbackAdapter.setOnViewClickListener(new FeedbackAdapter.OnViewClickListener() {
             @Override
@@ -85,9 +94,11 @@ public class FeedbackFragment extends Fragment {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(((ViewGroup)getView().getParent()).getId(), fb, "findThisFragment")
                         .addToBackStack(null)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .commit();
             }
         });
+
 
         feedbackAdapter.setOnEditClickListener(new FeedbackAdapter.OnEditClickListener() {
             @Override
@@ -105,6 +116,7 @@ public class FeedbackFragment extends Fragment {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(((ViewGroup)getView().getParent()).getId(), feedbackCreateFragment, "findThisFragment")
                         .addToBackStack(null)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .commit();
 
             }
@@ -124,6 +136,7 @@ public class FeedbackFragment extends Fragment {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(((ViewGroup)getView().getParent()).getId(), fb, "findThisFragment")
                         .addToBackStack(null)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .commit();
             }
         });

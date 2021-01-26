@@ -24,6 +24,7 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.MyView
     private OnDeleteClickListener deleteClickListener;
     private OnEditClickListener editClickListener;
     private OnViewClickListener viewClickListener;
+    private int pos;
 
     public FeedbackAdapter(Context context, ArrayList<Feedback> feedbacks) {
         this.context = context;
@@ -105,9 +106,9 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.MyView
                 public void onClick(View v) {
                     int position = getBindingAdapterPosition();
                     if(deleteClickListener != null && position != RecyclerView.NO_POSITION) {
-                        deleteClickListener.onDeleteClick(feedbacks.get(position));
-                        feedbacks.remove(position);
-                        notifyItemRemoved(position);
+                        deleteClickListener.onDeleteClick(feedbacks.get(position), position);
+//                        feedbacks.remove(position);
+//                        notifyItemRemoved(position);
                     }
                 }
             });
@@ -118,7 +119,7 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.MyView
     }
 
     public interface OnDeleteClickListener {
-        void onDeleteClick(Feedback feedback);
+        void onDeleteClick(Feedback feedback, int pos);
     }
 
     public void setOnDeleteClickListener(FeedbackAdapter.OnDeleteClickListener deleteClickListener) {

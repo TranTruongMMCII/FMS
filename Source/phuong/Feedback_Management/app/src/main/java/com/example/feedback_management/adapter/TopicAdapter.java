@@ -24,8 +24,10 @@ import com.example.feedback_management.model.Question;
 import com.example.feedback_management.model.Topic;
 import com.example.feedback_management.service.QuestionService;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,9 +80,9 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.MyViewHolder
             @Override
             public void onItemCheck(Question question) {
                 checkedQuetions.add(question);
-                saveCheckedQuestion(checkedQuetions);
-                count_check.add(1);
-                saveCountCheck(count_check);
+                count_check.add(Integer.parseInt(topic.getTopicID().toString()));
+                saveCheckedQuestion(checkedQuetions, count_check);
+//                saveCountCheck(count_check);
 
                 if(listener != null && position != RecyclerView.NO_POSITION) {
                     listener.onItemClick(topics.get(position));
@@ -91,9 +93,16 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.MyViewHolder
             @Override
             public void onItemUncheck(Question question) {
                 checkedQuetions.remove(question);
-                saveCheckedQuestion(checkedQuetions);
-                count_check.remove(count_check.size()-1);
-                saveCountCheck(count_check);
+//                saveCheckedQuestion(checkedQuetions);
+
+                for(int i=0;i<count_check.size();i++) {
+                    if(count_check.get(i) == Integer.parseInt(topic.getTopicID().toString())) {
+                        count_check.remove(i);
+//                        saveCountCheck(count_check);
+                        saveCheckedQuestion(checkedQuetions, count_check);
+                        break;
+                    }
+                }
 
                 if(listener != null && position != RecyclerView.NO_POSITION) {
                     listener.onItemClick(topics.get(position));
@@ -168,24 +177,28 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.MyViewHolder
     }
 
 
-    private void saveCheckedQuestion(ArrayList<Question> checkedQuetions) {
-        SharedPreferences appSharedPrefs_review = PreferenceManager
+    private void saveCheckedQuestion(ArrayList<Question> checkedQuetions, ArrayList<Integer> count) {
+        SharedPreferences appSharedPrefs_review_question = PreferenceManager
                 .getDefaultSharedPreferences(context);
-        SharedPreferences.Editor prefsEditor_review = appSharedPrefs_review.edit();
+        SharedPreferences.Editor prefsEditor_review = appSharedPrefs_review_question.edit();
         Gson gson_review = new Gson();
-        String json_review = gson_review.toJson(checkedQuetions);
-        prefsEditor_review.putString("checked_question_set", json_review);
+
+        String json_review_question = gson_review.toJson(checkedQuetions);
+        prefsEditor_review.putString("checked_question_set", json_review_question);
+
+        String json_review_count = gson_review.toJson(count);
+        prefsEditor_review.putString("count", json_review_count);
+
         prefsEditor_review.commit();
     }
 
-    private void saveCountCheck(ArrayList<Integer> count) {
-        SharedPreferences appSharedPrefs_review = PreferenceManager
-                .getDefaultSharedPreferences(context);
-        SharedPreferences.Editor prefsEditor_review = appSharedPrefs_review.edit();
-        Gson gson_review = new Gson();
-        String json_review = gson_review.toJson(count);
-        prefsEditor_review.putString("count", json_review);
-        prefsEditor_review.commit();
-    }
+//    private void saveCountCheck(ArrayList<Integer> count) {
+//        SharedPreferences appSharedPrefs_review = PreferenceManager
+//                .getDefaultSharedPreferences(context);
+//        SharedPreferences.Editor prefsEditor_review = appSharedPrefs_review.edit();
+//        Gson gson_review = new Gson();
+//        prefsEditor_review.commit();
+//    }
+
 
 }

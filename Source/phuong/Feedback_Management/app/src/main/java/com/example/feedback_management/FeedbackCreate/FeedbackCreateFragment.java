@@ -1,5 +1,6 @@
 package com.example.feedback_management.FeedbackCreate;
 
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 
 import android.content.SharedPreferences;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.feedback_management.AppExecutors;
+import com.example.feedback_management.Dialog.SuccessDialog;
 import com.example.feedback_management.Feedback.FeedbackFragment;
 import com.example.feedback_management.Feedback.FeedbackViewModel;
 import com.example.feedback_management.FeedbackReview.FeedbackReviewFragment;
@@ -73,8 +75,14 @@ public class FeedbackCreateFragment extends Fragment {
     private ArrayList<Question> getCheckedQuestion = new ArrayList<>();
     private ArrayList<Integer> count = new ArrayList<>();
 
+    private ArrayList<Long> getAllQuestionsID = new ArrayList<>();
+    private ArrayList<Long> getCheckedQuestionID = new ArrayList<>();
+
+
     private int pos = 0;
     private long typeid = 0;
+
+    private TextView tvFeedbackCreate;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -88,6 +96,7 @@ public class FeedbackCreateFragment extends Fragment {
         spinnerTypeFeedback = view.findViewById(R.id.spinnerFeedbackType);
         tvFeedbackTitle = view.findViewById(R.id.tvFeedbackTitle);
         etFeedbackTitle = view.findViewById(R.id.etFeedbackTitle);
+        tvFeedbackCreate = view.findViewById(R.id.tvFeedbackCreate);
 
         rvTopicList = view.findViewById(R.id.rvFeedbackItem);
         rvTopicList.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -146,48 +155,121 @@ public class FeedbackCreateFragment extends Fragment {
                     }
                 });
 
-                if(text.equals("view_fragment")) {
+                if(text.equals("view_fragment"))
+                {
 
                     btnReview.setText("SAVE");
 
-                    feedbackCreateViewModel.getTopicList().observe(getViewLifecycleOwner(), new Observer<ArrayList<Topic>>() {
+                    tvFeedbackCreate.setText("Edit New Feedback");
+
+                    topicAdapter.setOnItemClickListener(new TopicAdapter.OnItemClickListener() {
                         @Override
-                        public void onChanged(ArrayList<Topic> topics) {
+                        public void onItemClick(Topic topic) {
+                            SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 
-                            topicAdapter.setOnItemClickListener(new TopicAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(Topic topic) {
+                            Gson gson = new Gson();
 
-                                    getCheckedQuestion(topics, getCheckedFeedback);
+                            String json_count = appSharedPrefs.getString("count", "");
+                            Type type_count = new TypeToken<ArrayList<Integer>>() { }.getType();
+                            count = gson.fromJson(json_count, type_count);
 
+                            String json_question = appSharedPrefs.getString("checked_question_set", "");
+                            Type type_question = new TypeToken<ArrayList<Question>>() { }.getType();
+                            getCheckedQuestion = gson.fromJson(json_question, type_question);
+
+
+                        }
+                    });
+
+                    btnReview.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        AppExecutors.getInstance().getDiskIO().execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                for(int i=0;i<topicData.size();i++) {
+                                    for(int j=0;j<topicData.get(i).getQuestions().size();j++) {
+                                        getAllQuestionsID.add(topicData.get(i).getQuestions().get(j).getQuestionID());
+                                    }
                                 }
-                            });
 
-                            getCheckedQuestion(topics, getCheckedFeedback);
+                                for(int i=0;i<getCheckedQuestion.size();i++) {
+                                    getCheckedQuestionID.add(getCheckedQuestion.get(i).getQuestionID());
+                                }
 
-                            btnBack.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    AppExecutors.getInstance().getDiskIO().execute(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            FeedbackFragment feedbackFragment = new FeedbackFragment();
-                                            getActivity().getSupportFragmentManager().beginTransaction()
-                                                    .replace(((ViewGroup)getView().getParent()).getId(), feedbackFragment, "findThisFragment")
-                                                    .addToBackStack(null)
-                                                    .commit();
+                                getAllQuestionsID.removeAll(getCheckedQuestionID);
+
+                                ArrayList<Long> getUncheckedQuestionID = new ArrayList<>(getAllQuestionsID);
+
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                        if(!checkInput(etFeedbackTitle)) {
+                                            return;
                                         }
-                                    });
+
+                                        ArrayList<Integer> removeDup = removeDup(count);
+
+                                        if(removeDup.size()<topicData.size()) {
+                                            Toast.makeText(getContext(), "Please choose atleast one question for each topics.", Toast.LENGTH_LONG).show();
+                                            return;
+                                        }
+
+                                        for(int i=0;i<getUncheckedQuestionID.size();i++) {
+                                            feedbackCreateViewModel.deleteFeedbackQuestion(getCheckedFeedback.getFeedbackID(), getUncheckedQuestionID.get(i));
+                                        }
+
+                                        for(int i=0;i<getCheckedQuestionID.size();i++) {
+                                            feedbackCreateViewModel.insertFeedbackQuestion(getCheckedFeedback.getFeedbackID(), getCheckedQuestionID.get(i));
+                                        }
+
+                                        feedbackCreateViewModel.updateFeedback(getCheckedFeedback.getFeedbackID(), typeid, etFeedbackTitle.getText().toString());
+
+
+
+                                        SuccessDialog successDialog = SuccessDialog.getInstance(((ViewGroup)getView().getParent()).getId());
+                                        successDialog.show(getChildFragmentManager(), null);
+
+                                    }
+                                });
+
+
+                            }
+                        });
+
+
+                        }
+                    });
+
+                    btnBack.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AppExecutors.getInstance().getDiskIO().execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    FeedbackFragment feedbackFragment = new FeedbackFragment();
+                                    getActivity().getSupportFragmentManager().beginTransaction()
+                                            .replace(((ViewGroup)getView().getParent()).getId(), feedbackFragment, "findThisFragment")
+                                            .addToBackStack(null)
+                                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                            .commit();
                                 }
                             });
                         }
                     });
 
-                    }
+
+                }
                     if(text.equals("edit_fragment"))  {
+
+                        tvFeedbackCreate.setText("Edit New Feedback");
+
                         topicAdapter.setOnItemClickListener(new TopicAdapter.OnItemClickListener() {
                             @Override
                             public void onItemClick(Topic topic) {
+
                                 SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 
                                 Gson gson = new Gson();
@@ -204,10 +286,17 @@ public class FeedbackCreateFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
 
-                            if(count.size()<topicData.size()) {
-                                Toast.makeText(getContext(), "Xin hãy chọn ít nhất 1 câu hỏi", Toast.LENGTH_LONG).show();
+                            if(!checkInput(etFeedbackTitle)) {
                                 return;
                             }
+
+                            ArrayList<Integer> removeDup = removeDup(count);
+
+                            if(removeDup.size()<topicData.size()) {
+                                Toast.makeText(getContext(), "Please choose atleast one question for each topics.", Toast.LENGTH_LONG).show();
+                                return;
+                            }
+
 
                             FeedbackReviewFragment fb = new FeedbackReviewFragment();
                             if(!etFeedbackTitle.getText().toString().equals("") && etFeedbackTitle.getText().length() > 0) {
@@ -220,6 +309,7 @@ public class FeedbackCreateFragment extends Fragment {
                                 getActivity().getSupportFragmentManager().beginTransaction()
                                         .replace(((ViewGroup)getView().getParent()).getId(), fb, "findThisFragment")
                                         .addToBackStack(null)
+                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                         .commit();
 
                             }
@@ -236,11 +326,14 @@ public class FeedbackCreateFragment extends Fragment {
                                     getActivity().getSupportFragmentManager().beginTransaction()
                                             .replace(((ViewGroup)getView().getParent()).getId(), fb, "findThisFragment")
                                             .addToBackStack(null)
+                                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                             .commit();
                                 }
                             });
                         }
                     });
+
+
                 }
 
             }
@@ -291,10 +384,22 @@ public class FeedbackCreateFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-                    if(count.size()<topicData.size()) {
-                        Toast.makeText(getContext(), "Xin hãy chọn ít nhất 1 câu hỏi", Toast.LENGTH_LONG).show();
+                    if(!checkInput(etFeedbackTitle)) {
                         return;
                     }
+
+                    ArrayList<Integer> removeDup = removeDup(count);
+
+                    String tmp = "";
+                    for(int i=0;i<count.size();i++) {
+                        tmp+=count.get(i).toString()+" ";
+                    }
+
+                    if(removeDup.size()<topicData.size()) {
+                        Toast.makeText(getContext(), "Please choose atleast one question for each topics.", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
 
                     FeedbackReviewFragment fb = new FeedbackReviewFragment();
 
@@ -306,6 +411,7 @@ public class FeedbackCreateFragment extends Fragment {
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .replace(((ViewGroup)getView().getParent()).getId(), fb, "findThisFragment")
                             .addToBackStack(null)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                             .commit();
 
 
@@ -319,6 +425,7 @@ public class FeedbackCreateFragment extends Fragment {
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .replace(((ViewGroup)getView().getParent()).getId(), fb, "findThisFragment")
                             .addToBackStack(null)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                             .commit();
                 }
             });
@@ -346,99 +453,22 @@ public class FeedbackCreateFragment extends Fragment {
         retrieveTasks();
     }
 
-    private void getCheckedQuestion(ArrayList<Topic> topics, Feedback getCheckedFeedback) {
-        topicAdapter.setOnItemClickListener(new TopicAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(Topic topic) {
-                SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-
-                Gson gson = new Gson();
-                String json = appSharedPrefs.getString("count", "");
-
-                Type type = new TypeToken<ArrayList<Integer>>() { }.getType();
-                count = gson.fromJson(json, type);
-
-            }
-        });
-
-        SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-
-        Gson gson = new Gson();
-        String json = appSharedPrefs.getString("checked_question_set", "");
-
-        Type type = new TypeToken<ArrayList<Question>>() { }.getType();
-
-        getCheckedQuestion = gson.fromJson(json, type);
-
-        ArrayList<Long> getAllQuestionsID = new ArrayList<>();
-        ArrayList<Long> getCheckedQuestionID = new ArrayList<>();
-
-        for(int i=0;i<topics.size();i++) {
-            for(int j=0;j<topics.get(i).getQuestions().size();j++) {
-                getAllQuestionsID.add(topics.get(i).getQuestions().get(j).getQuestionID());
+    private ArrayList<Integer> removeDup(ArrayList<Integer> arrayList) {
+        ArrayList<Integer> newList = new ArrayList<>();
+        for(Integer element : arrayList) {
+            if(!newList.contains(element)) {
+                newList.add(element);
             }
         }
+        return newList;
+    }
 
-        for(int i=0;i<getCheckedQuestion.size();i++) {
-            getCheckedQuestionID.add(getCheckedQuestion.get(i).getQuestionID());
+    private boolean checkInput(EditText text) {
+        if(text.getText().length() <= 0) {
+            text.setError("Nhập thiếu");
+            return false;
         }
-
-
-        getAllQuestionsID.removeAll(getCheckedQuestionID);
-
-        ArrayList<Long> getUncheckedQuestionID = new ArrayList<>(getAllQuestionsID);
-
-        btnReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                AppExecutors.getInstance().getDiskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if(count.size()<topicData.size()) {
-                                    Toast.makeText(getContext(), "Xin hãy chọn ít nhất 1 câu hỏi", Toast.LENGTH_LONG).show();
-                                    return;
-                                }
-                                else {
-                                    try {
-
-                                        for(int i=0;i<getUncheckedQuestionID.size();i++) {
-                                            feedbackReviewViewModel.deleteFeedbackQuestion(getCheckedFeedback.getFeedbackID(), getUncheckedQuestionID.get(i));
-                                        }
-
-                                        for(int i=0;i<getCheckedQuestionID.size();i++) {
-                                            feedbackReviewViewModel.insertFeedbackQuestion(getCheckedFeedback.getFeedbackID(), getCheckedQuestionID.get(i));
-                                        }
-
-
-                                        feedbackReviewViewModel.updateFeedback(getCheckedFeedback.getFeedbackID(), typeid, etFeedbackTitle.getText().toString());
-
-                                        FeedbackFragment feedbackFragment = new FeedbackFragment();
-
-
-                                        getActivity().getSupportFragmentManager().beginTransaction()
-                                                .replace(((ViewGroup)getView().getParent()).getId(), feedbackFragment, "findThisFragment")
-                                                .addToBackStack(null)
-                                                .commit();
-
-                                    }
-                                    catch (Exception e) { }
-                                }
-                            }
-                        });
-
-                    }
-                });
-
-
-            }
-        });
-
-
-
+        return true;
     }
 
 }

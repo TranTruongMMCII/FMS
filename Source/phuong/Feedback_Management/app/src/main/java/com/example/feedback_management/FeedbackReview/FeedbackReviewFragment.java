@@ -1,9 +1,12 @@
 package com.example.feedback_management.FeedbackReview;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.feedback_management.AppExecutors;
+import com.example.feedback_management.Dialog.SuccessDialog;
 import com.example.feedback_management.Feedback.FeedbackFragment;
 import com.example.feedback_management.FeedbackCreate.FeedbackCreateFragment;
 import com.example.feedback_management.FeedbackCreate.FeedbackCreateViewModel;
@@ -63,6 +67,7 @@ public class FeedbackReviewFragment extends Fragment {
     private TextView tvFeedbackTitle;
     private TextView tvAdminID;
     private TextView tvCheckedQuestion;
+    private TextView tvFeedbackReview;
 
     private ArrayList<Question> getCheckedQuestion = new ArrayList<>();
 
@@ -79,6 +84,7 @@ public class FeedbackReviewFragment extends Fragment {
         tvFeedbackTitle = view.findViewById(R.id.tvFeedbackTitle);
         tvAdminID = view.findViewById(R.id.tvAdminID);
         tvCheckedQuestion = view.findViewById(R.id.tvCheckedQuestion);
+        tvFeedbackReview = view.findViewById(R.id.tvFeedbackReview);
 
         topicData = new ArrayList<>();
 
@@ -86,6 +92,7 @@ public class FeedbackReviewFragment extends Fragment {
         if(bundle != null) {
             String getFeedbackTitle = bundle.getString("feedbackTitle");
             tvFeedbackTitle.setText(getFeedbackTitle);
+            tvFeedbackTitle.setTextColor(Color.RED);
             Feedback getCheckedFeedback = (Feedback) bundle.getParcelable("selected_feedback_review");
 
             if(getCheckedFeedback != null) {
@@ -99,6 +106,7 @@ public class FeedbackReviewFragment extends Fragment {
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(((ViewGroup)getView().getParent()).getId(), fb, "findThisFragment")
                                 .addToBackStack(null)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                 .commit();
                     }
                 });
@@ -111,6 +119,7 @@ public class FeedbackReviewFragment extends Fragment {
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(((ViewGroup)getView().getParent()).getId(), fb, "findThisFragment")
                                 .addToBackStack(null)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                 .commit();
                     }
                 });
@@ -179,6 +188,10 @@ public class FeedbackReviewFragment extends Fragment {
 
                         if(text.equals("view_fragment"))
                         {
+                            tvFeedbackReview.setText("Detail Feedback");
+
+                            tvAdminID.setText(getCheckedFeedback.getAdminID().getUserName());
+                            tvAdminID.setTextColor(Color.RED);
 
                             loadCheckedQuestions_view(topics, getCheckedFeedback);
 
@@ -191,11 +204,12 @@ public class FeedbackReviewFragment extends Fragment {
                                     Bundle bundle = new Bundle();
                                     bundle.putParcelable("selected_feedback", getCheckedFeedback);
                                     bundle.putString("save", "SAVE");
-                                    bundle.putString("fragment","edit_fragment");
+                                    bundle.putString("fragment","view_fragment");
                                     fb.setArguments(bundle);
                                     getActivity().getSupportFragmentManager().beginTransaction()
                                             .replace(((ViewGroup)getView().getParent()).getId(), fb, "findThisFragment")
                                             .addToBackStack(null)
+                                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                             .commit();
                                 }
                             });
@@ -207,6 +221,7 @@ public class FeedbackReviewFragment extends Fragment {
                                     getActivity().getSupportFragmentManager().beginTransaction()
                                             .replace(((ViewGroup)getView().getParent()).getId(), fb, "findThisFragment")
                                             .addToBackStack(null)
+                                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                             .commit();
 
                                 }
@@ -218,12 +233,14 @@ public class FeedbackReviewFragment extends Fragment {
 
                             loadCheckedQuestions(topics);
 
+                            tvFeedbackReview.setText("Review Edit Feedback");
 
                             Long feedbackId = getCheckedFeedback.getFeedbackID();
 
 
 
                             tvAdminID.setText(getCheckedFeedback.getAdminID().getUserName());
+                            tvAdminID.setTextColor(Color.RED);
 
                             btnSave.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -242,14 +259,8 @@ public class FeedbackReviewFragment extends Fragment {
 
                                                 feedbackReviewViewModel.updateFeedback(getCheckedFeedback.getFeedbackID(), typeid, title);
 
-
-                                                FeedbackFragment feedbackFragment = new FeedbackFragment();
-
-
-                                                getActivity().getSupportFragmentManager().beginTransaction()
-                                                        .replace(((ViewGroup)getView().getParent()).getId(), feedbackFragment, "findThisFragment")
-                                                        .addToBackStack(null)
-                                                        .commit();
+                                                SuccessDialog successDialog = SuccessDialog.getInstance(((ViewGroup)getView().getParent()).getId());
+                                                successDialog.show(getChildFragmentManager(), null);
 
                                             }
                                             catch (Exception e) { }
@@ -266,6 +277,7 @@ public class FeedbackReviewFragment extends Fragment {
                         loadCheckedQuestions(topics);
 
                         tvAdminID.setText("admin");
+                        tvAdminID.setTextColor(Color.RED);
 
                         long typeid = bundle.getLong("typeid");
 
@@ -288,12 +300,8 @@ public class FeedbackReviewFragment extends Fragment {
                                             feedbackReviewViewModel.insertFeedbackQuestion(feedbackId, getCheckedQuestion.get(i).getQuestionID());
                                         }
 
-                                        FeedbackFragment feedbackFragment = new FeedbackFragment();
-
-                                        getActivity().getSupportFragmentManager().beginTransaction()
-                                                .replace(((ViewGroup)getView().getParent()).getId(), feedbackFragment, "findThisFragment")
-                                                .addToBackStack(null)
-                                                .commit();
+                                        SuccessDialog successDialog = SuccessDialog.getInstance(((ViewGroup)getView().getParent()).getId());
+                                        successDialog.show(getChildFragmentManager(), null);
 
                                     }
                                 });
@@ -318,6 +326,7 @@ public class FeedbackReviewFragment extends Fragment {
                                         getActivity().getSupportFragmentManager().beginTransaction()
                                                 .replace(((ViewGroup)getView().getParent()).getId(), fb, "findThisFragment")
                                                 .addToBackStack(null)
+                                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                                 .commit();
                                     }
                                 });
@@ -341,7 +350,7 @@ public class FeedbackReviewFragment extends Fragment {
             for(int k=0;k<topics.get(i).getQuestions().size();k++) {
                 for(int j=0;j<getCheckedQuestion.size();j++) {
                     if(getCheckedQuestion.get(j).getQuestionID().equals(topics.get(i).getQuestions().get(k).getQuestionID())) {
-                        tmp+=getCheckedQuestion.get(j).getQuesionContent()+"<br>";
+                        tmp+="-"+getCheckedQuestion.get(j).getQuesionContent()+"<br>";
                         break;
                     }
                 }
@@ -362,7 +371,7 @@ public class FeedbackReviewFragment extends Fragment {
                     Long getQuestionId = topics.get(i).getQuestions().get(k).getQuestionID();
                     String getChckQuestionContent = getCheckedFeedback.getFeedback_Questions().get(j).getFeedback_QuestionKey().getQuestion_feedback_question().getQuesionContent();
                     if(getChckQuestionId.equals(getQuestionId)) {
-                        tmp+=getChckQuestionContent+"<br>";
+                        tmp+="-"+getChckQuestionContent+"<br>";
                         break;
                     }
 

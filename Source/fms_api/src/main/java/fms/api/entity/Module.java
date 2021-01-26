@@ -54,6 +54,7 @@ public class Module extends Auditable<String>{
 	private Date FeedbackEndTime;
 	
 	@ManyToOne
+    @JsonIgnore
 	@JoinColumn(name = "FeedbackID")
 	private Feedback feedback_module;
 	

@@ -14,14 +14,16 @@ public class Feedback implements Parcelable {
     private Admin adminID;
     private boolean isdeleted;
     private List<Feedback_Question> feedback_Questions;
+    private List<Module> modules;
     private TypeFeedback feedback_typeID;
 
-    public Feedback(Long FeedbackID, String title, Admin adminID, boolean isdeleted, List<Feedback_Question> feedback_Questions, TypeFeedback feedback_typeID) {
+    public Feedback(Long FeedbackID, String title, Admin adminID, boolean isdeleted, List<Feedback_Question> feedback_Questions, List<Module> modules, TypeFeedback feedback_typeID) {
         this.feedbackID = FeedbackID;
         this.title = title;
         this.adminID = adminID;
         this.isdeleted = isdeleted;
         this.feedback_Questions = feedback_Questions;
+        this.modules = modules;
         this.feedback_typeID = feedback_typeID;
     }
 
@@ -93,6 +95,14 @@ public class Feedback implements Parcelable {
 
     public void setFeedback_typeID(TypeFeedback feedback_typeID) {
         this.feedback_typeID = feedback_typeID;
+    }
+
+    public List<Module> getModules() {
+        return modules;
+    }
+
+    public void setModules(List<Module> modules) {
+        this.modules = modules;
     }
 
     @Override

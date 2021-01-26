@@ -34,7 +34,8 @@ public class FeedbackController {
 	
 	@GetMapping("/Feedback")
 	public List<Feedback> getAllFeedbacks() {
-		return repository.getFeedbackList();
+//		return repository.getFeedbackList();
+		return repository.findAll();
 	}
 	
 	@GetMapping("/last_Feedback")
