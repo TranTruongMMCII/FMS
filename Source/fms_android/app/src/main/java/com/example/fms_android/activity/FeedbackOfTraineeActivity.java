@@ -1,36 +1,28 @@
 package com.example.fms_android.activity;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Gravity;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fms_android.Constants;
-import com.example.fms_android.MainActivity;
 import com.example.fms_android.R;
 import com.example.fms_android.adapter.TrainingModuleFeedbackAdapter;
 import com.example.fms_android.fragment.TraineeFeedbackFragment;
 import com.example.fms_android.model.Answer;
 import com.example.fms_android.model.QuestionOfTruong;
 import com.example.fms_android.service.AnswerService;
+import com.example.fms_android.service.QuestionService;
 import com.example.fms_android.utility.APIUtility;
 
 import java.util.ArrayList;
@@ -43,7 +35,6 @@ public class FeedbackOfTraineeActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private TrainingModuleFeedbackAdapter trainingModuleFeedbackAdapter;
-    private View view;
     private ArrayList<QuestionOfTruong> questionOfTruongs;
     private Button btnSubmit;
     private Bundle bundle;
@@ -52,6 +43,7 @@ public class FeedbackOfTraineeActivity extends AppCompatActivity {
     private AnswerService answerService;
     private TextView txtModuleName, txtClassName, txtTraineeName;
     private EditText txtGeneralComment;
+    private QuestionService questionService;
 
     public static FeedbackOfTraineeActivity getInstance(){
         return new FeedbackOfTraineeActivity();
@@ -87,13 +79,23 @@ public class FeedbackOfTraineeActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
+        questionService = APIUtility.getQuestionService();
         questionOfTruongs = new ArrayList<>();
-        questionOfTruongs.add(new QuestionOfTruong(1, 1, "Khóa học này có phù hợp với bạn không?", 0));
-//        questionOfTruongs.add(new QuestionOfTruong(2, 1, "Khóa học này có cần thay đổi gì không?", 0));
-//        questionOfTruongs.add(new QuestionOfTruong(3, 1, "Khóa học này có đủ thông tin với bạn không?", 0));
-//        questionOfTruongs.add(new QuestionOfTruong(4, 1, "Khóa học này có đủ thông tin với bạn không?", 0));
-//        questionOfTruongs.add(new QuestionOfTruong(5, 1, "Khóa học này có đủ thông tin với bạn không?", 0));
 
+        Call<ArrayList<QuestionOfTruong>> arrayListCall = questionService.getQuestions();
+        arrayListCall.enqueue(new Callback<ArrayList<QuestionOfTruong>>() {
+            @Override
+            public void onResponse(Call<ArrayList<QuestionOfTruong>> call, Response<ArrayList<QuestionOfTruong>> response) {
+                if (response.isSuccessful() && response.body() != null){
+                    questionOfTruongs = response.body();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<QuestionOfTruong>> call, Throwable t) {
+                questionOfTruongs = new ArrayList<>();
+            }
+        });
 
         trainingModuleFeedbackAdapter = new TrainingModuleFeedbackAdapter(getApplicationContext(), questionOfTruongs);
         recyclerView.setAdapter(trainingModuleFeedbackAdapter);
@@ -143,12 +145,10 @@ public class FeedbackOfTraineeActivity extends AppCompatActivity {
                         answerCall.enqueue(new Callback<Answer>() {
                             @Override
                             public void onResponse(Call<Answer> call, Response<Answer> response) {
-//                                Toast.makeText(getApplication().getBaseContext(), getString(R.string.add_successfully), Toast.LENGTH_LONG).show();;
                             }
 
                             @Override
                             public void onFailure(Call<Answer> call, Throwable t) {
-//                                Toast.makeText(getApplication().getBaseContext(), getString(R.string.failed_to_add) + t.getMessage(), Toast.LENGTH_LONG).show();;
                                return;
                             }
                         });
@@ -162,22 +162,12 @@ public class FeedbackOfTraineeActivity extends AppCompatActivity {
                         Constants.CLASS_ID = String.valueOf(classID);
                         Constants.MODULE_ID = String.valueOf(moduleID);
 
-//                        Intent intent = new Intent(this, MainActivity.class);
-//                        startActivity(intent);
                         this.finish();
                         TraineeFeedbackFragment fragment = TraineeFeedbackFragment.getInstance();
                         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//                        fragmentTransaction.replace(R.id.activity_feedback, fragment, "TraineeFeedbackFragment");
-//                        fragmentTransaction.commit();
-//                        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.feedback_fragment);
                         fragmentTransaction.detach(fragment)
                                 .attach(fragment)
                                 .commit();
-//                        fragment.show(getSupportFragmentManager(), "TraineeFeedbackFragment");
-
-//                        getSupportFragmentManager().beginTransaction()
-//                                .show(TraineeFeedbackFragment.getInstance())
-//                                .commit();
                     });
                     builder1.setCancelable(false);
                     AlertDialog alertDialog = builder1.create();

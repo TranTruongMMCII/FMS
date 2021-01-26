@@ -37,7 +37,6 @@ public class MultiRowsRadioGroup extends RadioGroup {
                 if (parent == MultiRowsRadioGroup.this && child instanceof ViewGroup) {
                     for(final RadioButton radioButton : getRadioButtonFromGroup((ViewGroup) child)){
                         int id = radioButton.getId();
-                        // generates an id if it's missing
                         if (id == View.NO_ID) {
                             if(Build.VERSION.SDK_INT>=17) id = View.generateViewId();
                             else id = radioButton.hashCode();

@@ -1,6 +1,5 @@
 package com.example.fms_android.fragment;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +9,8 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fms_android.Constants;
@@ -54,20 +51,6 @@ public class TraineeFeedbackFragment extends Fragment {
         feedbackOfTruongs.add(new FeedbackOfTruong("FeedbackOfTruong A1", "2", "Class 2", "1", "Truyền thông và mạng máy tính", "2020", "InComplete"));
         feedbackOfTruongs.add(new FeedbackOfTruong("FeedbackOfTruong A1", "12", "Class 12", "1", "Truyền thông và mạng máy tính", "2020", "Complete"));
         feedbackOfTruongs.add(new FeedbackOfTruong("FeedbackOfTruong A1", "13", "Class 13", "1", "Truyền thông và mạng máy tính", "2020", "InComplete"));
-
-//        int k = 0;
-//        System.out.println(Constants.IS_COMPLETED);
-//        if (Constants.IS_COMPLETED == true){
-//            for (FeedbackOfTruong feedbackOfTruong:feedbackOfTruongs
-//                 ) {
-//                System.out.println(k ++);
-//                if (feedbackOfTruong.getClassID().equals(Constants.CLASS_ID) && feedbackOfTruong.getModuleID().equals(Constants.MODULE_ID)){
-//                    feedbackOfTruong.setStatus(getString(R.string.complete));
-//                    Constants.IS_COMPLETED = false;
-//                    break;
-//                }
-//            }
-//        }
 
         traineeFeedbackAdapter = new TraineeFeedbackAdapter(getContext(), retrieveTasks(feedbackOfTruongs));
         recyclerViewTraineeFeedback.setAdapter(traineeFeedbackAdapter);
