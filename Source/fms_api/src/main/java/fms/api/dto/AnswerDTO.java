@@ -23,6 +23,8 @@ public class AnswerDTO {
 	
 	@NonNull
 	private int value;
+	
+	private String comment;
 
 	public int getClassID() {
 		return classID;
@@ -63,4 +65,18 @@ public class AnswerDTO {
 	public void setValue(int value) {
 		this.value = value;
 	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public void setClassID(int classID) {
+		this.classID = classID;
+	}
+	
+	
 }

@@ -19,7 +19,6 @@ public class Answer extends Auditable<String>{
 	
 	@Column(name = "Value")
 	private int value;
-<<<<<<< HEAD
 	
 	@Column(name = "Comment")
 	private String comment;
@@ -31,9 +30,7 @@ public class Answer extends Auditable<String>{
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-=======
->>>>>>> bbc4404227759715db241878bf63d4aa42df7f40
-
+	
 	public AnswerKey getAnswerKey() {
 		return answerKey;
 	}

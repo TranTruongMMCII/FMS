@@ -79,8 +79,5 @@ public class ModuleController {
 		return respone;
 	}
 
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> bbc4404227759715db241878bf63d4aa42df7f40

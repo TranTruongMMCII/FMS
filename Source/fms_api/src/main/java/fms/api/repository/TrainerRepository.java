@@ -9,8 +9,4 @@ import fms.api.entity.Trainer;
 public interface TrainerRepository extends JpaRepository<Trainer, String>{
 
 	
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> bbc4404227759715db241878bf63d4aa42df7f40

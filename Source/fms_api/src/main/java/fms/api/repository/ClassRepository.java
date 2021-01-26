@@ -16,8 +16,4 @@ public interface ClassRepository extends JpaRepository<Class, Long> {
 	public List<Class> getAllClass();
 	
 	Optional<Class> findByClassName(String className);
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> bbc4404227759715db241878bf63d4aa42df7f40
