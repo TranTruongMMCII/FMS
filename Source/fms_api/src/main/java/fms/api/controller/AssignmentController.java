@@ -256,7 +256,7 @@ public class AssignmentController {
 
 		Assignment asm = new Assignment();
 
-		Class cls = classRepository.findById(asmDto.getClassId()).orElseThrow(() -> new ResourceNotFoundException("Class not found"));
+		Class cls = classRepository.findById((long) asmDto.getClassId()).orElseThrow(() -> new ResourceNotFoundException("Class not found"));
 
 		Module module = moduleRepository.findById(asmDto.getModuleId()).orElseThrow(() -> new ResourceNotFoundException("Module not found"));
 

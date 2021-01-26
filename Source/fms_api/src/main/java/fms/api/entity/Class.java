@@ -27,7 +27,7 @@ public class Class extends Auditable<String>{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ClassID")
-	private long classID;
+	private Long classID;
 	
 	@Column(name = "ClassName")
 	private String className;

@@ -25,13 +25,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 FragmentManager fm = getSupportFragmentManager();
 //                AssignmentFragment fb = AssignmentFragment.getInstance();
-                TraineeFeedbackFragment traineeFeedbackFragment = TraineeFeedbackFragment.getInstance();
-//                AdminStatisticsFragment adminStatisticsFragment = AdminStatisticsFragment.getInstance();
+//                TraineeFeedbackFragment traineeFeedbackFragment = TraineeFeedbackFragment.getInstance();
+                AdminStatisticsFragment adminStatisticsFragment = AdminStatisticsFragment.getInstance();
 
                 FragmentTransaction transaction = fm.beginTransaction();
 //                transaction.replace(R.id.activity_main_container, fb, "assignmentFragment");
-                transaction.replace(R.id.activity_main_container, traineeFeedbackFragment, "TraineeFeedbackFragment");
-//                transaction.replace(R.id.activity_main_container, adminStatisticsFragment, "AdminStatisticsFragment");
+//                transaction.replace(R.id.activity_main_container, traineeFeedbackFragment, "TraineeFeedbackFragment");
+                transaction.replace(R.id.activity_main_container, adminStatisticsFragment, "AdminStatisticsFragment");
 
                 transaction.commit();
                 button.setVisibility(View.INVISIBLE);

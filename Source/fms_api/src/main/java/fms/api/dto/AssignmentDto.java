@@ -11,7 +11,7 @@ import fms.api.entity.Trainer;
 public class AssignmentDto {
 	
 	@NonNull
-	public Long classId;
+	public long classId;
 	
 	@NonNull
 	public Long moduleId;
@@ -21,11 +21,11 @@ public class AssignmentDto {
 	
 	public String registrationCode;
 
-	public Long getClassId() {
+	public long getClassId() {
 		return classId;
 	}
 
-	public void setClassId(Long classId) {
+	public void setClassId(long classId) {
 		this.classId = classId;
 	}
 

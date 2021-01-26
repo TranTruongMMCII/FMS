@@ -1,10 +1,11 @@
 package com.example.fms_android.model;
 
 public class Answer {
-    int classID, moduleID, questionID, value;
+    long classID;
+    int moduleID, questionID, value;
     String traineeID, comment;
 
-    public Answer(int classID, int moduleID, int questionID, int value, String traineeID, String comment) {
+    public Answer(long classID, int moduleID, int questionID, int value, String traineeID, String comment) {
         this.classID = classID;
         this.moduleID = moduleID;
         this.questionID = questionID;
@@ -21,11 +22,11 @@ public class Answer {
         this.comment = comment;
     }
 
-    public int getClassID() {
+    public long getClassID() {
         return classID;
     }
 
-    public void setClassID(int classID) {
+    public void setClassID(long classID) {
         this.classID = classID;
     }
 

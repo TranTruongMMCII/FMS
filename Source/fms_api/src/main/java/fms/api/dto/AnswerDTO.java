@@ -5,12 +5,10 @@ import org.springframework.lang.NonNull;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class AnswerDTO {
 
 	@NonNull
-	private int classID;
+	private long classID;
 	
 	@NonNull
 	private long moduleID;
@@ -26,12 +24,8 @@ public class AnswerDTO {
 	
 	private String comment;
 
-	public int getClassID() {
+	public long getClassID() {
 		return classID;
-	}
-
-	public void setClassID(long l) {
-		this.classID = (int) l;
 	}
 
 	public long getModuleID() {
@@ -74,7 +68,7 @@ public class AnswerDTO {
 		this.comment = comment;
 	}
 
-	public void setClassID(int classID) {
+	public void setClassID(long classID) {
 		this.classID = classID;
 	}
 	

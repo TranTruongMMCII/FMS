@@ -15,7 +15,7 @@ public class Feedback_Question_DTO {
 	public Long feedbackID;
 	
 	@NonNull
-	public Long questionID;
+	public int questionID;
 
 	public Long getFeedbackID() {
 		return feedbackID;
@@ -25,11 +25,11 @@ public class Feedback_Question_DTO {
 		this.feedbackID = feedbackID;
 	}
 
-	public Long getQuestionID() {
+	public int getQuestionID() {
 		return questionID;
 	}
 
-	public void setQuestionID(Long questionID) {
+	public void setQuestionID(int questionID) {
 		this.questionID = questionID;
 	}
 }

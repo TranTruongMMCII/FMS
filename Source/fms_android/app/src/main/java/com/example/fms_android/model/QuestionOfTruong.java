@@ -4,9 +4,9 @@ public class QuestionOfTruong {
     private int questionID;
     private int topicID;
     private String questionContent;
-    private int isDeleted;
+    private boolean isDeleted;
 
-    public QuestionOfTruong(int questionID, int topicID, String questionContent, int isDeleted) {
+    public QuestionOfTruong(int questionID, int topicID, String questionContent, boolean isDeleted) {
         this.questionID = questionID;
         this.topicID = topicID;
         this.questionContent = questionContent;
@@ -25,7 +25,7 @@ public class QuestionOfTruong {
         return questionContent;
     }
 
-    public int getIsDeleted() {
+    public boolean getIsDeleted() {
         return isDeleted;
     }
 }

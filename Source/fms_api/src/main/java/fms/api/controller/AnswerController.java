@@ -272,11 +272,12 @@ public class AnswerController {
 		Trainee trainee = traineeRepository.findById(answerDTO.getTraineeID())
 				.orElseThrow(()->new ResourceNotFoundException("Trainee not found!"));
 		
-		Question question = questionRepository.findById((long) answerDTO.getQuestionID())
+		Question question = questionRepository.findById(answerDTO.getQuestionID())
 				.orElseThrow(()->new ResourceNotFoundException("Question not found!"));
 		
 		answer.setAnswerKey(new AnswerKey(class1, module, trainee, question));
 		answer.setValue(answerDTO.getValue());
+		answer.setComment(answerDTO.getComment());
 		
 		return answerRepository.save(answer);
 	}

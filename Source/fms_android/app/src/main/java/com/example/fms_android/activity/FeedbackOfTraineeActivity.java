@@ -80,25 +80,26 @@ public class FeedbackOfTraineeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         questionService = APIUtility.getQuestionService();
-        questionOfTruongs = new ArrayList<>();
+        questionOfTruongs = new ArrayList<>();;
 
         Call<ArrayList<QuestionOfTruong>> arrayListCall = questionService.getQuestions();
         arrayListCall.enqueue(new Callback<ArrayList<QuestionOfTruong>>() {
             @Override
             public void onResponse(Call<ArrayList<QuestionOfTruong>> call, Response<ArrayList<QuestionOfTruong>> response) {
                 if (response.isSuccessful() && response.body() != null){
-                    questionOfTruongs = response.body();
+                    setQuestionOfTruongs(response.body());
+//                    System.out.println(response.body());
+                    trainingModuleFeedbackAdapter = new TrainingModuleFeedbackAdapter(getApplicationContext(), response.body());
+                    recyclerView.setAdapter(trainingModuleFeedbackAdapter);
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<QuestionOfTruong>> call, Throwable t) {
-                questionOfTruongs = new ArrayList<>();
             }
         });
 
-        trainingModuleFeedbackAdapter = new TrainingModuleFeedbackAdapter(getApplicationContext(), questionOfTruongs);
-        recyclerView.setAdapter(trainingModuleFeedbackAdapter);
+
 
         btnSubmit.setOnClickListener(view -> {
             if (TextUtils.isEmpty(txtGeneralComment.getText())){
@@ -106,7 +107,7 @@ public class FeedbackOfTraineeActivity extends AppCompatActivity {
             }
             Builder builder = new Builder(this);
             builder.setTitle(getString(R.string.announcement));
-            if(trainingModuleFeedbackAdapter.getItemChecked() != questionOfTruongs.size()){
+            if(trainingModuleFeedbackAdapter.getItemChecked() != trainingModuleFeedbackAdapter.getItemCount()){
                 builder.setMessage(getString(R.string.complete_feedback));
                 builder.setIcon(R.drawable.baseline_priority_high_black_18dp);
                 builder.setPositiveButton(getString(R.string.ok), (dialogInterface, i) -> {
@@ -181,5 +182,9 @@ public class FeedbackOfTraineeActivity extends AppCompatActivity {
                 alertDialog.show();
             }
         });
+    }
+
+    private void setQuestionOfTruongs(ArrayList<QuestionOfTruong> questionOfTruongs){
+        this.questionOfTruongs = questionOfTruongs;
     }
 }

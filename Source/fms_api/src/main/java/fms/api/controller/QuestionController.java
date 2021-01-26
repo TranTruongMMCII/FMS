@@ -2,10 +2,12 @@ package fms.api.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import fms.api.dto.QuestionDTO;
 import fms.api.entity.Question;
 import fms.api.exception.ResourceNotFoundException;
 import fms.api.repository.QuestionRepository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,8 +37,25 @@ public class QuestionController {
 		
 	}
 	
+	@GetMapping("/questions/getAll")
+	public List<QuestionDTO> getAll(){
+		List<QuestionDTO> questionDTOs = new ArrayList<>();
+		
+		List<Question> questions =  new ArrayList<>();
+		questions = questionRespository.findAll();
+		for (Question question : questions) {
+			QuestionDTO dto = new QuestionDTO();
+			dto.setQuestionID(question.getQuestionID());
+			dto.setQuestionContent(question.getQuesionContent());
+			dto.setTopicID(question.getTopic_question().getTopicID());
+			dto.setIsDeleted(question.getIsDeleted());
+			questionDTOs.add(dto);
+		}
+		return questionDTOs;
+	}
+	
 	@GetMapping("/questions/{id}")
-	public ResponseEntity<Question> getCourseById(@PathVariable(value = "id") Long questionId)
+	public ResponseEntity<Question> getCourseById(@PathVariable(value = "id") int questionId)
 		throws ResourceNotFoundException{
 		Question question = questionRespository.findById(questionId).orElseThrow(()->new ResourceNotFoundException("Question not found on :: " + questionId));
 				
@@ -49,7 +68,7 @@ public class QuestionController {
 	}
 
 	@PutMapping("/questions/{id}")
-	public ResponseEntity<Question> updateQuestion(@PathVariable (value = "id") Long questionId, @Validated @RequestBody Question questionDetails) throws ResourceNotFoundException {
+	public ResponseEntity<Question> updateQuestion(@PathVariable (value = "id") int questionId, @Validated @RequestBody Question questionDetails) throws ResourceNotFoundException {
 		
 		Question question = questionRespository.findById(questionId).orElseThrow(()->new ResourceNotFoundException("Question not found on :: " + questionId) );
 		
@@ -65,7 +84,7 @@ public class QuestionController {
 	}
 	
 	@DeleteMapping("/questions/{id}")
-	public Map<String, Boolean> deleteQuestion(@PathVariable(value = "id") Long questionId) throws Exception 
+	public Map<String, Boolean> deleteQuestion(@PathVariable(value = "id") int questionId) throws Exception 
 	{
 		Question question = questionRespository.findById(questionId).orElseThrow(()->new ResourceNotFoundException("Question not found on :: " + questionId));
 		
