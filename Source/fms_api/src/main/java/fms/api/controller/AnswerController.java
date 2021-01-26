@@ -108,7 +108,11 @@ public class AnswerController {
 		return ResponseEntity.ok().body(answerDTO);
 	}
 	
+<<<<<<< HEAD
 	@GetMapping("/getAnswerByClassId/{classID}")
+=======
+	@GetMapping("/s/{classID}")
+>>>>>>> bbc4404227759715db241878bf63d4aa42df7f40
 	public List<AnswerDTO> getAnswerByClassId(
 			@PathVariable(value = "classID") int classID) throws ResourceNotFoundException{
 		List<Answer> answers = answerRepository.findAnswerByClassId(classID);

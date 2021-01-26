@@ -45,4 +45,8 @@ public class Assignment extends Auditable<String>{
 		this.registrationCode = registrationCode;
 	}	
 	
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> bbc4404227759715db241878bf63d4aa42df7f40

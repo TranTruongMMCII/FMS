@@ -16,4 +16,8 @@ public interface ModuleRepository extends JpaRepository<Module, Long>{
 	
 	Module findModuleByModuleName(@Param ("ModuleName")String moduleName);
 	
+<<<<<<< HEAD
+=======
+	
+>>>>>>> bbc4404227759715db241878bf63d4aa42df7f40
 }

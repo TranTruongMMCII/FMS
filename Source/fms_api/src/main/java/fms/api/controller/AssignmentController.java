@@ -1,7 +1,10 @@
 package fms.api.controller;
 
 import java.sql.Timestamp;
+<<<<<<< HEAD
 import java.text.SimpleDateFormat;
+=======
+>>>>>>> bbc4404227759715db241878bf63d4aa42df7f40
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,7 +13,10 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.http.MediaType;
+=======
+>>>>>>> bbc4404227759715db241878bf63d4aa42df7f40
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -53,11 +59,72 @@ public class AssignmentController {
 	TrainerRepository trainerRepository;
 
 	@GetMapping("/getAll")
+<<<<<<< HEAD
 	public List<Assignment> getAllAssignment() {
+=======
+	public List<AssignmentDto> getAllAssignment() {
+>>>>>>> bbc4404227759715db241878bf63d4aa42df7f40
 		List<Assignment> asm = asmRepository.findAll();
 		AssignmentKey asmKey = new AssignmentKey();
 		List<AssignmentDto> responseAsmDto = new ArrayList<AssignmentDto>();
 
+<<<<<<< HEAD
+=======
+		for (Assignment obj : asm) {
+			asmKey = obj.getAssignmentKey();
+			AssignmentDto asmDto = new AssignmentDto();
+
+			Class responseClass = asmKey.getClassId();
+			asmDto.setClassId(responseClass);
+
+			Module responseModule = asmKey.getModuleId();
+			asmDto.setModuleId(responseModule);
+
+			Trainer responseTrainer = asmKey.getTrainerId();
+			asmDto.setTrainerId(responseTrainer);
+			
+			
+
+			asmDto.setRegistrationCode(obj.getRegistrationCode());
+
+			responseAsmDto.add(asmDto);
+		}
+
+		return responseAsmDto;
+	}
+
+//	@GetMapping("/getAssignmentById/{classId}/{moduleId}/{trainerId}")
+//	public ResponseEntity<AssignmentDto> getAssignmentById(
+//			@PathVariable(value = "classId") Class classId,
+//			@PathVariable(value = "moduleId") Module moduleId, @PathVariable(value = "trainerId") Trainer trainerId)
+//			throws ResourceNotFoundException {
+//
+//		AssignmentKey asmKey = new AssignmentKey(classId, moduleId, trainerId);
+//		Assignment asm = asmRepository.findById(asmKey)
+//				.orElseThrow(() -> new ResourceNotFoundException("Assignment Not Found"));
+//		AssignmentDto asmDto = new AssignmentDto();
+//
+//		Class responseClass = asmKey.getClassId();
+//		asmDto.setClassId(responseClass.getClassID());
+//
+//		Module responseModule = asmKey.getModuleId();
+//		asmDto.setModuleId(responseModule.getModuleID());
+//
+//		Trainer responseTrainer = asmKey.getTrainerId();
+//		asmDto.setTrainerId(responseTrainer.getUserName());
+//
+//		asmDto.setRegistrationCode(asm.getRegistrationCode());
+//		return ResponseEntity.ok().body(asmDto);
+//	}
+//
+//	@GetMapping("/getAssignmentByTrainerId/{trainerId}")
+//	public List<AssignmentDto> getAssignmentByTrainerId(@PathVariable(value = "trainerId") Trainer trainerId) {
+//
+//		List<Assignment> asm = asmRepository.findByAssignmentKeyTrainerId(trainerId);
+//		AssignmentKey asmKey = new AssignmentKey();
+//		List<AssignmentDto> responseAsmDto = new ArrayList<AssignmentDto>();
+//
+>>>>>>> bbc4404227759715db241878bf63d4aa42df7f40
 //		for (Assignment obj : asm) {
 //			asmKey = obj.getAssignmentKey();
 //			AssignmentDto asmDto = new AssignmentDto();
@@ -70,13 +137,17 @@ public class AssignmentController {
 //
 //			Trainer responseTrainer = asmKey.getTrainerId();
 //			asmDto.setTrainerId(responseTrainer.getUserName());
+<<<<<<< HEAD
 //			
 //			
+=======
+>>>>>>> bbc4404227759715db241878bf63d4aa42df7f40
 //
 //			asmDto.setRegistrationCode(obj.getRegistrationCode());
 //
 //			responseAsmDto.add(asmDto);
 //		}
+<<<<<<< HEAD
 
 		return asm;
 	}
@@ -270,6 +341,139 @@ public class AssignmentController {
 	}
 	
 
+=======
+//
+//		return responseAsmDto;
+//	}
+//
+//	@GetMapping("/getAssignmentByClassId/{classId}")
+//	public List<AssignmentDto> getAssignmentByTrainerId(@PathVariable(value = "classId") Class classId) {
+//
+//		List<Assignment> asm = asmRepository.findByAssignmentKeyClassId(classId);
+//		AssignmentKey asmKey = new AssignmentKey();
+//		List<AssignmentDto> responseAsmDto = new ArrayList<AssignmentDto>();
+//
+//		for (Assignment obj : asm) {
+//			asmKey = obj.getAssignmentKey();
+//			AssignmentDto asmDto = new AssignmentDto();
+//
+//			Class responseClass = asmKey.getClassId();
+//			asmDto.setClassId(responseClass.getClassID());
+//
+//			Module responseModule = asmKey.getModuleId();
+//			asmDto.setModuleId(responseModule.getModuleID());
+//
+//			Trainer responseTrainer = asmKey.getTrainerId();
+//			asmDto.setTrainerId(responseTrainer.getUserName());
+//
+//			asmDto.setRegistrationCode(obj.getRegistrationCode());
+//
+//			responseAsmDto.add(asmDto);
+//		}
+//
+//		return responseAsmDto;
+//	}
+//
+//	@GetMapping("/getAssignmentByModuleId/{moduleId}")
+//	public List<AssignmentDto> getAssignmentByTrainerId(@PathVariable(value = "moduleId") Module moduleId) {
+//
+//		List<Assignment> asm = asmRepository.findByAssignmentKeyModuleId(moduleId);
+//		AssignmentKey asmKey = new AssignmentKey();
+//		List<AssignmentDto> responseAsmDto = new ArrayList<AssignmentDto>();
+//
+//		for (Assignment obj : asm) {
+//			asmKey = obj.getAssignmentKey();
+//			AssignmentDto asmDto = new AssignmentDto();
+//
+//			Class responseClass = asmKey.getClassId();
+//			asmDto.setClassId(responseClass.getClassID());
+//
+//			Module responseModule = asmKey.getModuleId();
+//			asmDto.setModuleId(responseModule.getModuleID());
+//
+//			Trainer responseTrainer = asmKey.getTrainerId();
+//			asmDto.setTrainerId(responseTrainer.getUserName());
+//
+//			asmDto.setRegistrationCode(obj.getRegistrationCode());
+//
+//			responseAsmDto.add(asmDto);
+//		}
+//
+//		return responseAsmDto;
+//	}
+//	
+//	@GetMapping("/getAssignmentByRegistrationCode/{registrationCode}")
+//	public List<AssignmentDto> getAssignmentByRegistrationCode(@PathVariable(value = "registrationCode") String registrationCode) {
+//
+//		List<Assignment> asm = asmRepository.findByRegistrationCode(registrationCode);
+//		AssignmentKey asmKey = new AssignmentKey();
+//		List<AssignmentDto> responseAsmDto = new ArrayList<AssignmentDto>();
+//
+//		for (Assignment obj : asm) {
+//			asmKey = obj.getAssignmentKey();
+//			AssignmentDto asmDto = new AssignmentDto();
+//
+//			Class responseClass = asmKey.getClassId();
+//			asmDto.setClassId(responseClass.getClassID());
+//
+//			Module responseModule = asmKey.getModuleId();
+//			asmDto.setModuleId(responseModule.getModuleID());
+//
+//			Trainer responseTrainer = asmKey.getTrainerId();
+//			asmDto.setTrainerId(responseTrainer.getUserName());
+//
+//			asmDto.setRegistrationCode(obj.getRegistrationCode());
+//
+//			responseAsmDto.add(asmDto);
+//		}
+//
+//		return responseAsmDto;
+//	}
+//
+//	@PutMapping("/updateAssignment/{classId}/{moduleId}/{trainerId}")
+//	public ResponseEntity<Assignment> updateAssignment (@PathVariable(value = "classId") Class classId,
+//			@PathVariable(value = "moduleId") Module moduleId, @PathVariable(value = "trainerId") Trainer trainerId,
+//			@Validated @RequestBody AssignmentDto asmDto) throws ResourceNotFoundException {
+//		
+//		AssignmentKey asmKey = new AssignmentKey(classId, moduleId, trainerId);
+//
+//		Assignment asm = asmRepository.findById(asmKey).orElseThrow(() -> new ResourceNotFoundException("Assignment Not Found"));
+//
+//		Trainer trainer = new Trainer();
+//		trainer = trainerRepository.findById(asmDto.trainerId).orElseThrow(() -> new ResourceNotFoundException("Trainer Not Found " + asmDto.getTrainerId()));
+//		
+//		Assignment addAsm = new Assignment();
+//		addAsm.setAssignmentKey(new AssignmentKey(classId, moduleId, trainer));
+//		
+//		addAsm.setRegistrationCode(asm.getRegistrationCode());
+//
+//		Assignment updateAsm = asmRepository.save(addAsm);
+//		
+//		asmRepository.delete(asm);
+//		
+//		return ResponseEntity.ok().body(updateAsm);
+//		
+//	}
+//
+//	@PostMapping("/addAssignment")
+//	public Assignment addAssignment(@RequestBody AssignmentDto asmDto) throws ResourceNotFoundException {
+//
+//		Assignment asm = new Assignment();
+//
+//		Class cls = classRepository.findById(asmDto.getClassId()).orElseThrow(() -> new ResourceNotFoundException("Class not found"));
+//
+//		Module module = moduleRepository.findById(asmDto.getModuleId()).orElseThrow(() -> new ResourceNotFoundException("Module not found"));
+//
+//		Trainer trainer = new Trainer();
+//		trainer.setUserName(asmDto.getTrainerId());
+//
+//		asm.setAssignmentKey(new AssignmentKey(cls, module, trainer));
+//		
+//		asm.setRegistrationCode(asmDto.getRegistrationCode());
+//		return asmRepository.save(asm);
+//		
+//	}
+>>>>>>> bbc4404227759715db241878bf63d4aa42df7f40
 
 	@DeleteMapping("/deleteAssignment/{classId}/{moduleId}/{trainerId}")
 	public Map<String, Boolean> deleteAssignment(
