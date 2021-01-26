@@ -17,43 +17,54 @@ public class Feedback_QuestionKey implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "feedback_feedback_question", referencedColumnName = "FeedbackID", insertable = false)
-	private Feedback feedback_feedback_question;
+	@JoinColumn(name = "FeedbackID", referencedColumnName = "FeedbackID", insertable = false)
+	private Feedback feedbackID;
 
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "question_feedback_question", referencedColumnName = "QuestionID", insertable = false)
-	private Question question_feedback_question;
+	@JoinColumn(name = "QuestionID", referencedColumnName = "QuestionID", insertable = false)
+	private Question questionID;
 
-	@JsonIgnore
-	public Feedback getFeedback_feedback_question() {
-		return feedback_feedback_question;
-	}
-
-	public void setFeedback_feedback_question(Feedback feedback_feedback_question) {
-		this.feedback_feedback_question = feedback_feedback_question;
-	}
-
-	public Question getQuestion_feedback_question() {
-		return question_feedback_question;
-	}
-
-	public void setQuestion_feedback_question(Question question_feedback_question) {
-		this.question_feedback_question = question_feedback_question;
-	}
 	
 	
+	public Feedback_QuestionKey(Feedback feedbackID, Question questionID) {
+		super();
+		this.feedbackID = feedbackID;
+		this.questionID = questionID;
+	}
+
+
+
+	public Feedback getFeedbackID() {
+		return feedbackID;
+	}
+
+
+
+	public void setFeedbackID(Feedback feedbackID) {
+		this.feedbackID = feedbackID;
+	}
+
+
+
+	public Question getQuestionID() {
+		return questionID;
+	}
+
+
+
+	public void setQuestionID(Question questionID) {
+		this.questionID = questionID;
+	}
+
+
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-	public Feedback_QuestionKey(Feedback feedback_feedback_question, Question question_feedback_question) {
-		super();
-		this.feedback_feedback_question = feedback_feedback_question;
-		this.question_feedback_question = question_feedback_question;
-	}
-	
+
+
 	public Feedback_QuestionKey() {
 		super();
 	}

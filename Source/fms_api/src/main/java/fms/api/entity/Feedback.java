@@ -50,7 +50,7 @@ public class Feedback extends Auditable<String>{
 	private TypeFeedback feedback_typeID;
 	
 
-	@OneToMany(mappedBy = "Feedback_QuestionKey.feedback_feedback_question", cascade = CascadeType.ALL, orphanRemoval =  true)
+	@OneToMany(mappedBy = "feedback_QuestionKey.feedbackID", cascade = CascadeType.ALL, orphanRemoval =  true)
 	private List<Feedback_Question> feedback_Questions;
 	
 	

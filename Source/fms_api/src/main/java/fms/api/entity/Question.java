@@ -46,7 +46,7 @@ public class Question extends Auditable<String>{
 	@OneToMany(mappedBy = "answerKey.questionID", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Answer> answers;
 	
-	@OneToMany(mappedBy = "question_feedback_question", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "feedback_QuestionKey.questionID", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Feedback_Question> feedback_Questions;
 
 	@JsonIgnore
